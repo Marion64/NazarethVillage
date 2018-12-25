@@ -14,7 +14,7 @@ import java.sql.Statement;
 public class ConnectionClass {
     Connection conn;
     String classs = "com.mysql.jdbc.Driver";
-    String ip = "10.100.102.26";
+    String ip = "172.20.10.14";
     String url = "jdbc:mysql://"+ip+"/nazarethvillage";
     String un = "nazarethvillage";
     String password = "123456";
@@ -37,11 +37,11 @@ public class ConnectionClass {
             conn = DriverManager.getConnection(url, un, password);
 
         } catch (SQLException se) {
-            Log.e("ERRO", se.getMessage());
+            Log.e("ERROR", se.getMessage());
         } catch (ClassNotFoundException e) {
-            Log.e("ERRO", e.getMessage());
+            Log.e("ERROR", e.getMessage());
         } catch (Exception e) {
-            Log.e("ERRO", e.getMessage());
+            Log.e("ERROR", e.getMessage());
         }
         return conn;
     }

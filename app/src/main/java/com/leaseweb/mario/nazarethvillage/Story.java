@@ -2,7 +2,9 @@ package com.leaseweb.mario.nazarethvillage;
 
 import android.graphics.Bitmap;
 
-public class Story {
+import java.io.Serializable;
+
+public class Story implements Serializable {
     private Bitmap image;
     private String title;
     private String content;

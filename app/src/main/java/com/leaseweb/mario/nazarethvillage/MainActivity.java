@@ -27,6 +27,7 @@ import android.widget.ViewFlipper;
 
 import org.w3c.dom.Text;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -108,7 +109,7 @@ ViewFlipper v_flipper;
     }
     private void setViews(final ArrayList<Story> arraylist) {
         final TranslateAnimation animation = new TranslateAnimation(1500.0f, 0.0f, 0.0f, 0.0f); // new TranslateAnimation (float fromXDelta,float toXDelta, float fromYDelta, float toYDelta)
-        animation.setDuration(1000); // animation duration
+        animation.setDuration(500); // animation duration
         animation.setRepeatCount(0); // animation repeat count if u repeat only once set to 1 if u don't repeat set to 0
         animation.setFillAfter(false);
         final int max = arraylist.size();
@@ -187,14 +188,23 @@ ViewFlipper v_flipper;
             mImageView.setImageBitmap(MyData.get(i).getImage());
             mTextView.setText(MyData.get(i).getTitle());
             mTextView1.setText(MyData.get(i).getContent());
-            //final int j = i;
-            /*view2.setOnClickListener(new View.OnClickListener() {
+            final int j = i;
+            view2.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    showPopup(view2, j);
+                    Intent a = new Intent(getApplicationContext(), DetailsActivity.class);
+                    Bundle extras = new Bundle();
+                    extras.putParcelable("Image",  MyData.get(j).getImage());
+                    extras.putString("Title",  MyData.get(j).getTitle());
+                    extras.putString("Content",  MyData.get(j).getContent());
+                    a.putExtras(extras);
+                    //a.putExtra("Title",  MyData.get(j).getTitle());
+                    //a.putExtra("Content",  MyData.get(j).getContent());
+                    //a.putExtra("Image",  MyData.get(j).getImage());
+                    startActivity(a);
 
                 }
-            });*/
+            });
 
 
             return view2;
