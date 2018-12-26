@@ -1,8 +1,11 @@
 package com.leaseweb.mario.nazarethvillage;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.media.Image;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
@@ -21,16 +24,22 @@ import android.view.ViewGroup;
 import android.view.animation.TranslateAnimation;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ViewFlipper;
 
 import org.w3c.dom.Text;
 
+import java.io.ByteArrayOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import static com.leaseweb.mario.nazarethvillage.R.drawable.ic_connection_nointernet;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -40,6 +49,7 @@ ViewFlipper v_flipper;
     Timer timer = new Timer();
     ArrayList<Story> MyData = null;
     ListView mListView;
+
 
     private int index =0;
     @Override
@@ -51,7 +61,10 @@ ViewFlipper v_flipper;
 
         TextView text = (TextView) findViewById(R.id.textview);
         TextView text2 = (TextView) findViewById(R.id.textView2);
-
+        final ImageView test = (ImageView) findViewById(R.id.imageView4);
+        text.setVisibility(View.INVISIBLE);
+        text2.setVisibility(View.INVISIBLE);
+        test.setVisibility(View.INVISIBLE);
         //v_flipper = findViewById(R.id.flipper);
 
         /*FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -70,13 +83,8 @@ ViewFlipper v_flipper;
         toggle.syncState();
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        GetAllData();
 
-        GetData mydata = new GetData();
-        MyData = mydata.doInBackground();
-        setViews(MyData);
-        mListView = (ListView)findViewById(R.id.listView);
-        CustomAdapter customAdapter = new CustomAdapter();
-        mListView.setAdapter(customAdapter);
         
 
 
@@ -193,14 +201,8 @@ ViewFlipper v_flipper;
                 @Override
                 public void onClick(View view) {
                     Intent a = new Intent(getApplicationContext(), DetailsActivity.class);
-                    Bundle extras = new Bundle();
-                    extras.putParcelable("Image",  MyData.get(j).getImage());
-                    extras.putString("Title",  MyData.get(j).getTitle());
-                    extras.putString("Content",  MyData.get(j).getContent());
-                    a.putExtras(extras);
-                    //a.putExtra("Title",  MyData.get(j).getTitle());
-                    //a.putExtra("Content",  MyData.get(j).getContent());
-                    //a.putExtra("Image",  MyData.get(j).getImage());
+
+                    a.putExtra("index", MyData.get(j).getId());
                     startActivity(a);
 
                 }
@@ -251,11 +253,11 @@ ViewFlipper v_flipper;
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
+        if (id == R.id.nav_home) {
             // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+        } else if (id == R.id.nav_onlineshop) {
 
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.nav_signup) {
 
         }  else if (id == R.id.nav_share) {
 
@@ -264,5 +266,60 @@ ViewFlipper v_flipper;
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+
+    private void GetAllData(){
+        class GetAllData extends AsyncTask<String,Void,String>{
+            ProgressDialog loading;
+            TextView text = (TextView) findViewById(R.id.textview);
+            TextView text2 = (TextView) findViewById(R.id.textView2);
+            ImageView test = (ImageView) findViewById(R.id.imageView4);
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+                loading = ProgressDialog.show(MainActivity.this, "Loading","Please Wait...",true,true);
+            }
+
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+                if(MyData.size()>0){
+
+
+                    setViews(MyData);
+                    mListView = (ListView)findViewById(R.id.listView);
+                    mListView.setFocusable(false);
+                    CustomAdapter customAdapter = new CustomAdapter();
+                    mListView.setAdapter(customAdapter);
+                    text.setVisibility(View.VISIBLE);
+                    text2.setVisibility(View.VISIBLE);
+                    test.setVisibility(View.VISIBLE);
+                    loading.dismiss();
+                }else{
+
+                    loading.dismiss();
+                    test.setImageResource(R.drawable.nointernet);
+                    test.setVisibility(View.VISIBLE);
+                    RelativeLayout layout = (RelativeLayout) findViewById(R.id.relativelayout) ;
+                    layout.setBackgroundColor(Color.parseColor("#FDFDFE"));
+                    Toast.makeText(MainActivity.this,"No Connection",Toast.LENGTH_LONG).show();
+                }
+
+
+
+            }
+
+            @Override
+            protected String doInBackground(String... params) {
+                GetData mydata = new GetData();
+                MyData = mydata.doInBackground();
+                return null;
+
+            }
+
+        }
+        GetAllData gai = new GetAllData();
+        gai.execute();
     }
 }

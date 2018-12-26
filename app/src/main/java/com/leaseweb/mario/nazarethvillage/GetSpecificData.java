@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Map;
 
 
-public class GetData {
+public class GetSpecificData {
 
     ConnectionClass connectionClass;
     String ConnectionResult = "";
@@ -23,8 +23,8 @@ public class GetData {
     Story story;
     ArrayList<Story> stories = new ArrayList<Story>();
 
-    public ArrayList<Story> doInBackground() {
-
+    public ArrayList<Story> doInBackground(String id) {
+        int parse = Integer.parseInt(id);
         ArrayList<Story> data = null;
         data = new ArrayList<Story>();
         connectionClass = new ConnectionClass();
@@ -39,7 +39,7 @@ public class GetData {
             else
             {
                 // Change below query according to your own database.
-                String query = "select * from story";
+                String query = "select * from story where idstory ="+parse;
                 Statement stmt = conn.createStatement();
                 ResultSet rs = stmt.executeQuery(query);
                 while (rs.next()){
@@ -49,7 +49,7 @@ public class GetData {
                 }
 
 
-                ConnectionResult = " successful";
+                ConnectionResult = "successful";
                 isSuccess=true;
                 conn.close();
             }

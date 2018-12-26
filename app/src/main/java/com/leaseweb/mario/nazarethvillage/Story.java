@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import java.io.Serializable;
 
 public class Story implements Serializable {
+    private int id;
     private Bitmap image;
     private String title;
     private String content;
@@ -22,7 +23,12 @@ public class Story implements Serializable {
         return content;
     }
 
-    public Story(Bitmap image, String title, String content){
+    public int getId() {
+        return id;
+    }
+
+    public Story(int id,Bitmap image, String title, String content){
+        this.id = id;
         this.image=image;
         this.title=title;
         this.content=content;
