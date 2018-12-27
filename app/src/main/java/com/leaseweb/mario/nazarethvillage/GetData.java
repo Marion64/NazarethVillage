@@ -21,9 +21,11 @@ public class GetData {
     String ConnectionResult = "";
     Boolean isSuccess = false;
     Story story;
+    Shopitem shopitem;
     ArrayList<Story> stories = new ArrayList<Story>();
+    ArrayList<Shopitem> shopitems = new ArrayList<Shopitem>();
 
-    public ArrayList<Story> doInBackground() {
+    public ArrayList<Story> getstory(String q) {
 
         ArrayList<Story> data = null;
         data = new ArrayList<Story>();
@@ -39,13 +41,53 @@ public class GetData {
             else
             {
                 // Change below query according to your own database.
-                String query = "select * from story";
+                String query = ""+q;
                 Statement stmt = conn.createStatement();
                 ResultSet rs = stmt.executeQuery(query);
                 while (rs.next()){
                     story = new Story(rs.getInt("idstory"),getImage(rs.getString("image"),rs.getString("extension")), rs.getString("title"), rs.getString("content"));
 
                     data.add(story);
+                }
+
+
+                ConnectionResult = " successful";
+                isSuccess=true;
+                conn.close();
+            }
+        }
+        catch (Exception ex)
+        {
+            isSuccess = false;
+            ConnectionResult = ex.getMessage();
+        }
+
+        return data;
+    }
+
+    public ArrayList<Shopitem> getshopitem(String q) {
+
+        ArrayList<Shopitem> data = null;
+        data = new ArrayList<Shopitem>();
+        connectionClass = new ConnectionClass();
+        try
+        {
+
+            Connection conn = connectionClass.CONN();// Connect to database
+            if (conn == null)
+            {
+                ConnectionResult = "Check Your Internet Access!";
+            }
+            else
+            {
+                // Change below query according to your own database.
+                String query = ""+q;
+                Statement stmt = conn.createStatement();
+                ResultSet rs = stmt.executeQuery(query);
+                while (rs.next()){
+                    shopitem = new Shopitem(rs.getInt("idproduct"),getImage(rs.getString("image"),rs.getString("extension")),rs.getString("category"), rs.getString("name"), rs.getString("description"),rs.getString("price"));
+
+                    data.add(shopitem);
                 }
 
 

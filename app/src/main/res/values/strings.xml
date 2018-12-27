@@ -1,4 +1,14 @@
 <resources>
+    <string-array name="spinner1">
+        <item>Special Deals</item>
+        <item>Olive Wood</item>
+        <item>Books</item>
+        <item>DVDs</item>
+        <item>Shirts</item>
+        <item>Plates</item>
+        <item>Cups/Mugs</item>
+    </string-array>
+
     <string name="app_name">NazarethVillage</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>

@@ -21,9 +21,10 @@ public class GetSpecificData {
     String ConnectionResult = "";
     Boolean isSuccess = false;
     Story story;
+    Shopitem product;
     ArrayList<Story> stories = new ArrayList<Story>();
 
-    public ArrayList<Story> doInBackground(String id) {
+    public ArrayList<Story> getstory(String id) {
         int parse = Integer.parseInt(id);
         ArrayList<Story> data = null;
         data = new ArrayList<Story>();
@@ -46,6 +47,46 @@ public class GetSpecificData {
                     story = new Story(rs.getInt("idstory"),getImage(rs.getString("image"),rs.getString("extension")), rs.getString("title"), rs.getString("content"));
 
                     data.add(story);
+                }
+
+
+                ConnectionResult = "successful";
+                isSuccess=true;
+                conn.close();
+            }
+        }
+        catch (Exception ex)
+        {
+            isSuccess = false;
+            ConnectionResult = ex.getMessage();
+        }
+
+        return data;
+    }
+
+    public ArrayList<Shopitem> getshopitem(String id) {
+        int parse = Integer.parseInt(id);
+        ArrayList<Shopitem> data = null;
+        data = new ArrayList<Shopitem>();
+        connectionClass = new ConnectionClass();
+        try
+        {
+
+            Connection conn = connectionClass.CONN();// Connect to database
+            if (conn == null)
+            {
+                ConnectionResult = "Check Your Internet Access!";
+            }
+            else
+            {
+                // Change below query according to your own database.
+                String query = "select * from shop where idproduct ="+parse;
+                Statement stmt = conn.createStatement();
+                ResultSet rs = stmt.executeQuery(query);
+                while (rs.next()){
+                    product = new Shopitem(rs.getInt("idproduct"),getImage(rs.getString("image"),rs.getString("extension")),rs.getString("category"), rs.getString("name"), rs.getString("description"),rs.getString("price"));
+
+                    data.add(product);
                 }
 
 

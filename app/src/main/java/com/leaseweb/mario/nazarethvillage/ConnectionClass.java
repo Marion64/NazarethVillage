@@ -14,7 +14,7 @@ import java.sql.Statement;
 public class ConnectionClass {
     Connection conn;
     String classs = "com.mysql.jdbc.Driver";
-    String ip = "10.100.102.36";
+    String ip = "10.100.102.48";
     String url = "jdbc:mysql://"+ip+"/nazarethvillage";
     String un = "nazarethvillage";
     String password = "123456";

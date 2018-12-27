@@ -9,65 +9,11 @@
     tools:showIn="@layout/app_bar_main"
     android:id="@+id/relativelayout">
 
-    <ScrollView
+    <android.support.v4.view.ViewPager
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:id="@+id/containter">
 
-        <LinearLayout
-            android:id="@+id/Linearlayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <TextView
-                android:id='@+id/textview'
-                android:layout_width="211dp"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="0dp"
-                android:layout_marginTop="2dp"
-                android:text="What's new"
-                android:textSize="28dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <ImageView
-                android:id="@+id/imageView4"
-                android:layout_width="match_parent"
-                android:layout_height="440px"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="0dp"
-                android:layout_marginTop="16dp"
-                app:srcCompat="@drawable/ic_launcher_background" />
-
-            <TextView
-                android:id="@+id/textView2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="0dp"
-                android:layout_marginTop="20dp"
-                android:text="TextView"
-                android:textAlignment="center"
-                android:textSize="28dp" />
-
-            <ListView
-
-                android:id="@+id/listView"
-                android:layout_width="match_parent"
-                android:layout_height="350dp"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="0dp"
-                android:layout_marginTop="25dp">
-
-            </ListView>
-        </LinearLayout>
-    </ScrollView>
+    </android.support.v4.view.ViewPager>
 
 </RelativeLayout>
