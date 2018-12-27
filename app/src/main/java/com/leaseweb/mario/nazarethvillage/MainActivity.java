@@ -83,7 +83,7 @@ ViewFlipper v_flipper;
         toggle.syncState();
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        GetAllData();
+       // GetAllData();
 
         
 
@@ -269,7 +269,7 @@ ViewFlipper v_flipper;
     }
 
 
-    private void GetAllData(){
+    private void GetAllData(String table){
         class GetAllData extends AsyncTask<String,Void,String>{
             ProgressDialog loading;
             TextView text = (TextView) findViewById(R.id.textview);
@@ -313,7 +313,7 @@ ViewFlipper v_flipper;
             @Override
             protected String doInBackground(String... params) {
                 GetData mydata = new GetData();
-                MyData = mydata.doInBackground();
+                MyData = mydata.doInBackground(table);
                 return null;
 
             }
